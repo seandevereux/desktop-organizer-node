@@ -59,3 +59,4 @@ The icon will appear in:
 - macOS dock (if using .png)
 
 
+

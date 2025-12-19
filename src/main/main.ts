@@ -4,12 +4,14 @@ import * as fs from 'fs';
 import { OrganizerService } from './services/organizer.service';
 import { SessionService } from './services/session.service';
 import { ConfigService } from './services/config.service';
+import { UpdateService } from './services/update.service';
 
 let mainWindow: BrowserWindow | null = null;
 
 const organizerService = new OrganizerService();
 const sessionService = new SessionService();
 const configService = new ConfigService();
+const updateService = new UpdateService();
 
 function createWindow() {
   const isDev = process.env.NODE_ENV === 'development';
@@ -118,6 +120,23 @@ app.whenReady().then(() => {
 
   createWindow();
 
+  // Check for updates on startup (after a delay to not block UI)
+  setTimeout(() => {
+    updateService.checkForUpdates().then((result) => {
+      if (result.hasUpdate) {
+        console.log(`Update available: ${result.latestVersion}`);
+        // Emit update available event to renderer
+        mainWindow?.webContents.send('update:available', {
+          latestVersion: result.latestVersion,
+          currentVersion: result.currentVersion,
+          downloadUrl: result.downloadUrl,
+        });
+      }
+    }).catch((error) => {
+      console.error('Update check failed:', error);
+    });
+  }, 3000); // Check after 3 seconds
+
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
@@ -225,6 +244,25 @@ ipcMain.handle('organizer:saveConfig', async (_event, config: any) => {
   try {
     await configService.saveConfig(config);
     return { success: true };
+  } catch (error: any) {
+    return { success: false, error: error.message };
+  }
+});
+
+// Update handlers
+ipcMain.handle('update:check', async () => {
+  try {
+    const result = await updateService.checkForUpdates();
+    return { success: true, data: result };
+  } catch (error: any) {
+    return { success: false, error: error.message };
+  }
+});
+
+ipcMain.handle('update:getVersion', async () => {
+  try {
+    const version = updateService.getCurrentVersion();
+    return { success: true, data: version };
   } catch (error: any) {
     return { success: false, error: error.message };
   }

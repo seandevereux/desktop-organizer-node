@@ -30,6 +30,8 @@ export interface OrganizerAPI {
   unmaximize(): void;
   toggleMaximize(): void;
   close(): void;
+  checkForUpdates(): Promise<{ success: boolean; data?: any; error?: string }>;
+  getVersion(): Promise<{ success: boolean; data?: string; error?: string }>;
 }
 
 declare global {

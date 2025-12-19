@@ -47,6 +47,10 @@ const organizerAPI = {
   onMaximizeChanged: (callback: (isMaximized: boolean) => void) => {
     ipcRenderer.on('window:maximize-changed', (_event, isMaximized: boolean) => callback(isMaximized));
   },
+  checkForUpdates: (): Promise<{ success: boolean; data?: any; error?: string }> =>
+    ipcRenderer.invoke('update:check'),
+  getVersion: (): Promise<{ success: boolean; data?: string; error?: string }> =>
+    ipcRenderer.invoke('update:getVersion'),
 };
 
 contextBridge.exposeInMainWorld('organizer', organizerAPI);

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FooterComponent } from './components/footer/footer.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule, FooterComponent],
   template: `
     <div class="splash-screen" [class.hidden]="!showSplash">
       <div class="splash-content">
@@ -40,6 +41,7 @@ import { CommonModule } from '@angular/common';
       <main class="app-main">
         <router-outlet></router-outlet>
       </main>
+      <app-footer></app-footer>
     </div>
   `,
   styles: [`
@@ -253,6 +255,8 @@ import { CommonModule } from '@angular/common';
       flex: 1;
       overflow: auto;
       padding: 24px;
+      display: flex;
+      flex-direction: column;
     }
   `]
 })
