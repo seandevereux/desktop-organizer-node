@@ -51,6 +51,9 @@ const organizerAPI = {
     ipcRenderer.invoke('update:check'),
   getVersion: (): Promise<{ success: boolean; data?: string; error?: string }> =>
     ipcRenderer.invoke('update:getVersion'),
+  onUpdateAvailable: (callback: (updateInfo: { latestVersion: string; currentVersion: string; downloadUrl?: string }) => void) => {
+    ipcRenderer.on('update:available', (_event, updateInfo) => callback(updateInfo));
+  },
 };
 
 contextBridge.exposeInMainWorld('organizer', organizerAPI);

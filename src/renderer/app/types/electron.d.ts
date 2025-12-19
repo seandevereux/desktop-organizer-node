@@ -32,6 +32,7 @@ export interface OrganizerAPI {
   close(): void;
   checkForUpdates(): Promise<{ success: boolean; data?: any; error?: string }>;
   getVersion(): Promise<{ success: boolean; data?: string; error?: string }>;
+  onUpdateAvailable(callback: (updateInfo: { latestVersion: string; currentVersion: string; downloadUrl?: string }) => void): void;
 }
 
 declare global {

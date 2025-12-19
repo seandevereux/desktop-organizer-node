@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import "../../types/electron";
 
 @Component({
   selector: "app-footer",
@@ -89,6 +90,14 @@ export class FooterComponent implements OnInit {
   ngOnInit() {
     this.loadVersion();
     this.checkForUpdates();
+
+    // Listen for update available events from main process
+    if (window.organizer.onUpdateAvailable) {
+      window.organizer.onUpdateAvailable((updateInfo) => {
+        this.updateAvailable = true;
+        this.updateUrl = updateInfo.downloadUrl;
+      });
+    }
   }
 
   async loadVersion() {
