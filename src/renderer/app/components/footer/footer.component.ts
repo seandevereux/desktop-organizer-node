@@ -1,6 +1,6 @@
+/// <reference path="../../types/electron.d.ts" />
 import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import "../../types/electron";
 
 @Component({
   selector: "app-footer",
