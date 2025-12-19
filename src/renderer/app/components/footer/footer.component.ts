@@ -83,7 +83,7 @@ import { CommonModule } from "@angular/common";
 })
 export class FooterComponent implements OnInit {
   currentYear = new Date().getFullYear();
-  appVersion = "1.2.0";
+  appVersion = "1.3.0";
   updateAvailable = false;
   updateUrl?: string;
 
