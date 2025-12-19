@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from "@angular/core";
+import { CommonModule } from "@angular/common";
 
 @Component({
-  selector: 'app-footer',
+  selector: "app-footer",
   standalone: true,
   imports: [CommonModule],
   template: `
@@ -13,69 +13,76 @@ import { CommonModule } from '@angular/common';
         </div>
         <div class="footer-version">
           <span class="version-text">Version {{ appVersion }}</span>
-          <span *ngIf="updateAvailable" class="update-badge" (click)="openUpdateLink()" title="Update available">
+          <span
+            *ngIf="updateAvailable"
+            class="update-badge"
+            (click)="openUpdateLink()"
+            title="Update available"
+          >
             Update Available
           </span>
         </div>
       </div>
     </footer>
   `,
-  styles: [`
-    .app-footer {
-      background: #f5f5f5;
-      border-top: 1px solid #e0e0e0;
-      padding: 12px 24px;
-      margin-top: auto;
-    }
+  styles: [
+    `
+      .app-footer {
+        background: #f5f5f5;
+        border-top: 1px solid #e0e0e0;
+        padding: 12px 24px;
+        margin-top: auto;
+      }
 
-    .footer-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 100%;
-    }
+      .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 100%;
+      }
 
-    .footer-brand {
-      display: flex;
-      align-items: center;
-    }
+      .footer-brand {
+        display: flex;
+        align-items: center;
+      }
 
-    .brand-text {
-      color: #666;
-      font-size: 13px;
-      font-weight: 500;
-    }
+      .brand-text {
+        color: #666;
+        font-size: 13px;
+        font-weight: 500;
+      }
 
-    .footer-version {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+      .footer-version {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
 
-    .version-text {
-      color: #999;
-      font-size: 12px;
-    }
+      .version-text {
+        color: #999;
+        font-size: 12px;
+      }
 
-    .update-badge {
-      background: #1976d2;
-      color: white;
-      padding: 4px 12px;
-      border-radius: 12px;
-      font-size: 11px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
+      .update-badge {
+        background: #1976d2;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
 
-    .update-badge:hover {
-      background: #1565c0;
-    }
-  `]
+      .update-badge:hover {
+        background: #1565c0;
+      }
+    `,
+  ],
 })
 export class FooterComponent implements OnInit {
   currentYear = new Date().getFullYear();
-  appVersion = '1.1.0';
+  appVersion = "1.2.0";
   updateAvailable = false;
   updateUrl?: string;
 
@@ -91,7 +98,7 @@ export class FooterComponent implements OnInit {
         this.appVersion = result.data;
       }
     } catch (error) {
-      console.error('Failed to load version:', error);
+      console.error("Failed to load version:", error);
     }
   }
 
@@ -105,15 +112,14 @@ export class FooterComponent implements OnInit {
         }
       }
     } catch (error) {
-      console.error('Failed to check for updates:', error);
+      console.error("Failed to check for updates:", error);
     }
   }
 
   openUpdateLink() {
     if (this.updateUrl) {
       // Open download URL in default browser
-      window.open(this.updateUrl, '_blank');
+      window.open(this.updateUrl, "_blank");
     }
   }
 }
-
